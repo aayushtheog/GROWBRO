@@ -7,15 +7,18 @@ import type {
   BusinessProfile,
   ChannelBreakdown,
   ChatMessage,
+  DailyMetricLog,
   GrowthMetric,
   GrowthObjective,
   Milestone,
   MonthlyMetric,
   PlanStep,
+  RoadmapDay,
   Strategy,
 } from '../types';
 import { uid } from '../lib/storage';
 import { understandProblem } from '../lib/businessLogic';
+import { createRoadmap } from '../lib/roadmap';
 import {
   DEMO_CHAT,
   DEMO_CHANNELS,
@@ -34,11 +37,18 @@ interface BusinessState {
   chat: ChatMessage[];
   isDemoSeeded: boolean;
 
+  // Business-type selection (personalization)
+  businessType: string | null;
+
   // Growth-coach state
   plan: GrowthObjective | null;
   strategies: Strategy[];
   selectedStrategyId: string | null;
   planSteps: PlanStep[];
+
+  // 30-day growth roadmap
+  roadmap: RoadmapDay[];
+  dailyMetrics: DailyMetricLog[];
 
   updateProfile: (profile: BusinessProfile) => void;
   refreshMetrics: () => void;
@@ -49,10 +59,14 @@ interface BusinessState {
   clearChat: () => void;
 
   // Growth-coach actions
+  setBusinessType: (businessType: string) => void;
   startGrowthPlan: (objective: GrowthObjective, strategies: Strategy[]) => void;
   selectStrategy: (strategyId: string) => void;
   togglePlanStep: (stepId: string) => void;
   addStrategyToPlan: (strategy: Strategy, problemText?: string) => void;
+  toggleRoadmapDay: (day: number) => void;
+  logDailyMetric: (log: Omit<DailyMetricLog, 'id'>) => void;
+  removeDailyMetric: (id: string) => void;
   resetGrowth: () => void;
 }
 
@@ -67,12 +81,19 @@ export const useBusinessStore = create<BusinessState>()(
       chat: DEMO_CHAT,
       isDemoSeeded: false,
 
+      businessType: null,
+
       plan: null,
       strategies: [],
       selectedStrategyId: null,
       planSteps: [],
 
+      roadmap: [],
+      dailyMetrics: [],
+
       updateProfile: (profile) => set({ profile }),
+
+      setBusinessType: (businessType) => set({ businessType }),
 
       refreshMetrics: () => {
         // Deterministic demo drift so the app feels "live" without a backend.
@@ -146,13 +167,16 @@ export const useBusinessStore = create<BusinessState>()(
           strategies,
           selectedStrategyId: null,
           planSteps: [],
+          roadmap: [],
         }),
 
-      // Pick a strategy and turn it into a checkable step-by-step action plan.
+      // Pick a strategy: turn its next steps into plan steps and generate the
+      // personalized 30-day roadmap for the selected strategy.
       selectStrategy: (strategyId) =>
         set((s) => {
           const strat = s.strategies.find((x) => x.id === strategyId);
           if (!strat) return {};
+          const roadmap = createRoadmap(strat);
           return {
             selectedStrategyId: strategyId,
             planSteps: strat.nextSteps.map((text) => ({
@@ -160,6 +184,7 @@ export const useBusinessStore = create<BusinessState>()(
               text,
               done: false,
             })),
+            roadmap,
           };
         }),
 
@@ -194,6 +219,7 @@ export const useBusinessStore = create<BusinessState>()(
           const existing = s.strategies.some((x) => x.id === strategy.id)
             ? s.strategies
             : [...s.strategies, strategy];
+          const roadmap = createRoadmap(strategy);
           return {
             plan: objective,
             strategies: existing,
@@ -203,11 +229,35 @@ export const useBusinessStore = create<BusinessState>()(
               text,
               done: false,
             })),
+            roadmap,
           };
         }),
 
+      toggleRoadmapDay: (day) =>
+        set((s) => ({
+          roadmap: s.roadmap.map((d) =>
+            d.day === day ? { ...d, done: !d.done, doneAt: !d.done ? Date.now() : undefined } : d,
+          ),
+        })),
+
+      logDailyMetric: (log) =>
+        set((s) => ({
+          dailyMetrics: [...s.dailyMetrics, { ...log, id: uid('metric') }],
+        })),
+
+      removeDailyMetric: (id) =>
+        set((s) => ({ dailyMetrics: s.dailyMetrics.filter((m) => m.id !== id) })),
+
+      // Reset the growth plan but keep the selected business type (so a "new
+      // problem" goes straight back to describing the problem).
       resetGrowth: () =>
-        set({ plan: null, strategies: [], selectedStrategyId: null, planSteps: [] }),
+        set({
+          plan: null,
+          strategies: [],
+          selectedStrategyId: null,
+          planSteps: [],
+          roadmap: [],
+        }),
     }),
     {
       name: 'growbro:business',
@@ -218,10 +268,13 @@ export const useBusinessStore = create<BusinessState>()(
         channels: state.channels,
         milestones: state.milestones,
         chat: state.chat,
+        businessType: state.businessType,
         plan: state.plan,
         strategies: state.strategies,
         selectedStrategyId: state.selectedStrategyId,
         planSteps: state.planSteps,
+        roadmap: state.roadmap,
+        dailyMetrics: state.dailyMetrics,
       }),
     },
   ),

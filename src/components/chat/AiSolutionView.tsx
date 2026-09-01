@@ -1,4 +1,4 @@
-import { Lightbulb, ListChecks, CheckCircle2, ArrowRight, ListChecks as ListChecksIcon } from 'lucide-react';
+import { Lightbulb, CheckCircle2, ListChecks as ListChecksIcon } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import type { AiSolution } from '../../types';

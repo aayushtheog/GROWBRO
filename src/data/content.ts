@@ -9,6 +9,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs_loyalty',
     title: 'From empty mornings to a full house',
     industry: 'Coffee Shop',
+    businessType: 'local-physical',
     challenge:
       'A local coffee shop saw foot traffic collapse between 9am and noon, with revenue flat for six months.',
     solution:
@@ -25,6 +26,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs_operations',
     title: 'Turning lost bookings into revenue',
     industry: 'Salon & Spa',
+    businessType: 'local-physical',
     challenge:
       'High no-show rates and off-peak idle slots were costing the business roughly 18% of weekly capacity.',
     solution:
@@ -41,6 +43,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs_acquisition',
     title: 'Scaling a boutique brand online',
     industry: 'E-commerce',
+    businessType: 'ecommerce',
     challenge:
       'A 2-person online store depended entirely on organic searches and had no repeat-purchase strategy.',
     solution:
@@ -56,6 +59,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs_marketing',
     title: 'A local gym doubles memberships',
     industry: 'Fitness Studio',
+    businessType: 'local-physical',
     challenge:
       'Membership sign-ups were seasonal and front-desk staff had no upsell playbook.',
     solution:
@@ -71,6 +75,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs_pricing',
     title: 'Packages that nudge buyers upward',
     industry: 'Marketing Agency',
+    businessType: 'agency-service',
     challenge:
       'A solo agency won work but always at the smallest package, so revenue was huge effort for thin reward.',
     solution:
@@ -86,6 +91,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs_online',
     title: 'A bakery sells out online',
     industry: 'Bakery & Food',
+    businessType: 'local-physical',
     challenge:
       'A bakery had plenty of foot traffic but almost no online orders and no way to reach regulars outside the shop.',
     solution:
@@ -96,6 +102,246 @@ export const CASE_STUDIES: CaseStudy[] = [
     apply:
       'Make ordering easy online and share one short real-life post a day — consistency beats polish.',
     tags: ['Digital', 'Marketing'],
+  },
+  {
+    id: 'cs_saas_first100',
+    title: 'A B2B SaaS finds its first 100 customers',
+    industry: 'SaaS',
+    businessType: 'b2b-saas',
+    challenge:
+      'A new B2B SaaS had a solid product but no customers — cold outreach went nowhere because it pitched everyone.',
+    solution:
+      'They picked ONE buyer persona, built a free lead-magnet guide, added a live demo funnel, and used one early success story as their sales anchor.',
+    result: 'Within 90 days they signed 112 accounts and lifted trial-to-paid conversion to 12%.',
+    metric: '112 first customers',
+    lesson: 'A narrow, specific market beats a broad one — clarity converts.',
+    apply:
+      'Choose one ideal customer, give them a low-cost reason to engage (guide/demo), and lead sales with a real example of success.',
+    tags: ['Acquisition', 'SaaS'],
+  },
+  {
+    id: 'cs_saas_churn',
+    title: 'A SaaS cuts churn with an onboarding flow',
+    industry: 'SaaS',
+    businessType: 'b2b-saas',
+    challenge:
+      'Signups poured in, but most users never reached their “aha” moment and quietly churned after the free trial.',
+    solution:
+      'They built a 5-email onboarding sequence, added in-app tips, and scheduled a success call for active users in the first week.',
+    result: 'Monthly churn dropped 25% and trial-to-paid conversion rose by a third.',
+    metric: '-25% churn',
+    lesson: 'Don’t just acquire users — guide them to a first win fast.',
+    apply:
+      'Map the one action a new user must take to see value, then email, prompt, and hand-hold them there in week one.',
+    tags: ['Retention', 'SaaS'],
+  },
+  {
+    id: 'cs_saas_pricing',
+    title: 'A SaaS doubles revenue with tiered pricing',
+    industry: 'SaaS',
+    businessType: 'b2b-saas',
+    challenge:
+      'A growing SaaS charged one flat price, so small users found it too expensive and large ones got a bargain.',
+    solution:
+      'They split the plan into Starter / Growth / Scale, added usage-based growth to the top tier, and moved free users to a clear trial.',
+    result: 'Average revenue per account rose 2.1x within two months.',
+    metric: '2.1x revenue/user',
+    lesson: 'One price leaves money on the table at both ends of the market.',
+    apply:
+      'Segment your offer into tiers and let users self-select by size — price for value, not cost.',
+    tags: ['Pricing', 'SaaS'],
+  },
+  {
+    id: 'cs_ecom_conversion',
+    title: 'A Shopify store doubles its conversion rate',
+    industry: 'E-commerce',
+    businessType: 'ecommerce',
+    challenge:
+      'An online store got steady traffic but almost no purchases — product pages had weak photos and no trust signals.',
+    solution:
+      'They added customer photos and reviews, clearer size/value info, and a simple abandoned-cart email sequence.',
+    result: 'Conversion rate climbed from 1.1% to 2.3% in eight weeks.',
+    metric: '1.1% → 2.3% conversion',
+    lesson: 'Traffic isn’t the problem — persuasion on the page is.',
+    apply:
+      'Add reviews, real photos, and one recovery email to your product pages before buying more ads.',
+    tags: ['Conversion', 'E-commerce'],
+  },
+  {
+    id: 'cs_ecom_vip',
+    title: 'An e-commerce brand builds a VIP email list',
+    industry: 'E-commerce',
+    businessType: 'ecommerce',
+    challenge:
+      'A D2C brand relied on paid ads for every sale and had no direct relationship with customers.',
+    solution:
+      'They added a “join the VIP list for 10% off” popup, a welcome sequence, and early-access drops for subscribers.',
+    result: 'Email became 40% of sales and advertising cost per sale fell by nearly half.',
+    metric: '40% of sales from email',
+    lesson: 'Owned audiences (email) are cheaper and more reliable than rented ones (ads).',
+    apply:
+      'Capture emails at every touchpoint and send a welcome + early-access sequence to turn one-time buyers into fans.',
+    tags: ['Marketing', 'E-commerce', 'Retention'],
+  },
+  {
+    id: 'cs_restaurant_weeknights',
+    title: 'A restaurant fills empty weeknights',
+    industry: 'Restaurant',
+    businessType: 'local-physical',
+    challenge:
+      'Weekend tables were full but Tuesdays and Wednesdays were dead, leaving staff idle and revenue flat.',
+    solution:
+      'They launched a “Chef’s Tasting Night” on slow evenings, a regulars’ loyalty card, and a local event partnership.',
+    result: 'Weekday revenue grew 28% and food waste dropped as kitchens ran consistent specials.',
+    metric: '+28% weekday revenue',
+    lesson: 'Give off-peak time a reason to exist instead of hoping it fills.',
+    apply:
+      'Create a special, event, or discount that only applies on your quietest days and promote it locally.',
+    tags: ['Retention', 'Local'],
+  },
+  {
+    id: 'cs_salon_membership',
+    title: 'A salon turns clients into members',
+    industry: 'Salon',
+    businessType: 'local-physical',
+    challenge:
+      'A busy salon had loyal clients but unpredictable cash flow and a quiet stretch between visits.',
+    solution:
+      'They introduced a monthly membership — discounted color/trim, product perks, and a reserved slot — and promoted it at checkout.',
+    result: '40% of regulars joined and two-thirds of bookings became recurring.',
+    metric: '40% became members',
+    lesson: 'A recurring membership smooths cash flow and locks in retention.',
+    apply:
+      'Offer a monthly plan that bundles a must-have service with a perk, and ask at the moment of delight.',
+    tags: ['Retention', 'Service', 'Revenue'],
+  },
+  {
+    id: 'cs_agency_retainers',
+    title: 'A web agency lands monthly retainers',
+    industry: 'Agency',
+    businessType: 'agency-service',
+    challenge:
+      'The agency only won one-off projects, so revenue stopped between launches and sales was a treadmill.',
+    solution:
+      'They created “growth retainer” packages (care, maintenance, monthly improvements) and pitched them at project completion.',
+    result: '60% of revenue became recurring within one quarter.',
+    metric: '60% recurring revenue',
+    lesson: 'Service margins multiply when one project turns into an ongoing relationship.',
+    apply:
+      'Package an ongoing element (support, retainer) into every project and propose it while the win is fresh.',
+    tags: ['Revenue', 'Agency'],
+  },
+  {
+    id: 'cs_local_trades',
+    title: 'A local trades business books more jobs',
+    industry: 'Local Trades',
+    businessType: 'local-physical',
+    challenge:
+      'A solo plumber landed a few jobs a month but lost most leads to slow quotes and a weak Google presence.',
+    solution:
+      'They optimised their Google Business profile, collected reviews on every job, and sent quotes the same day with a short follow-up.',
+    result: 'Quotes booked at double the rate and they sold out their next two weeks.',
+    metric: '2x quote-to-book rate',
+    lesson: 'Speed and trust win local work — respond fast and show proof.',
+    apply:
+      'Reply to enquiries the same day, keep review links handy, and follow up every quote once.',
+    tags: ['Local', 'Marketing', 'Conversion'],
+  },
+  {
+    id: 'cs_service_noshows',
+    title: 'A cleaning service stops losing revenue to no-shows',
+    industry: 'Service Business',
+    businessType: 'local-physical',
+    challenge:
+      'A cleaning company frequently drove to empty homes and busy diaries hid every cancellation until it was too late.',
+    solution:
+      'They automated booking reminders and a same-day “fill my slot” text to nearby regulars.',
+    result: 'No-shows fell from 18% to 6% and idle gaps dropped by a third.',
+    metric: '-12pp no-shows',
+    lesson: 'Operational automation protects revenue you already earned.',
+    apply:
+      'Set up automatic reminders and a same-day deal to refill cancelled appointments.',
+    tags: ['Operations', 'Service'],
+  },
+  {
+    id: 'cs_startup_launch',
+    title: 'A startup validates before it scales',
+    industry: 'Startup',
+    businessType: 'startup',
+    challenge:
+      'A startup was about to pour budget into ads before knowing who truly wanted the product.',
+    solution:
+      'They ran a tiny waitlist campaign, interviewed first users, and built a minimum product for the 100 most excited signups.',
+    result: 'They launched with real demand — first-week conversion beat all paid benchmarks.',
+    metric: 'Validated before scale',
+    lesson: 'Validating demand with a small group is cheaper than guessing at scale.',
+    apply:
+      'Launch a waitlist or pre-order to test interest and interview the first users before spending on growth.',
+    tags: ['Startup', 'Strategy', 'Acquisition'],
+  },
+  {
+    id: 'cs_freelancer_rates',
+    title: 'A freelancer raises rates and lands better clients',
+    industry: 'Freelance',
+    businessType: 'freelancer-consultant',
+    challenge:
+      'A skilled freelancer was always busy but earned little — they charged hourly and got the price-takers.',
+    solution:
+      'They switched to project-based pricing, packaged their work into 3 tiers, and published one client-result case study.',
+    result: 'Their average project fee rose 55% with fewer, better clients.',
+    metric: '+55% project fee',
+    lesson: 'Charge for outcomes and packages, not hours.',
+    apply:
+      'Move off hourly pricing to fixed packages and show a proof point to justify the higher tier.',
+    tags: ['Pricing', 'Freelance'],
+  },
+  {
+    id: 'cs_gym_retention',
+    title: 'A gym raises retention with a goals program',
+    industry: 'Fitness Studio',
+    businessType: 'local-physical',
+    challenge:
+      'Members joined in January, then stopped coming by March — churn was high and new signups couldn’t keep up.',
+    solution:
+      'They launched an 8-week goals challenge, weekly check-ins, and a complimentary “bring a friend” pass.',
+    result: 'Member attendance rose 45% and average membership length doubled.',
+    metric: '2x membership length',
+    lesson: 'Retention is a habit you build with goals and accountability, not a perk.',
+    apply:
+      'Give members a short challenge and check in weekly — attendance and loyalty climb together.',
+    tags: ['Retention', 'Local'],
+  },
+  {
+    id: 'cs_b2c_referral',
+    title: 'A B2C brand grows on referrals',
+    industry: 'B2C / Consumer',
+    businessType: 'b2c-business',
+    challenge:
+      'A consumer goods brand had happy customers but no natural way for them to invite friends.',
+    solution:
+      'They added a “give a friend 15%, get 15%” referral reward and a one-tap share link after purchase.',
+    result: 'Referrals produced 22% of new customers within three months.',
+    metric: '22% of new customers',
+    lesson: 'Happy customers will market for you if you make it effortless and rewarding.',
+    apply:
+      'Add a simple two-sided discount and ask for the share right after a great purchase moment.',
+    tags: ['Marketing', 'B2C', 'Retention'],
+  },
+  {
+    id: 'cs_consultant_funnel',
+    title: 'A consultant builds a steady lead pipeline',
+    industry: 'Consulting',
+    businessType: 'freelancer-consultant',
+    challenge:
+      'Work came in feast-or-famine from word of mouth, making income unpredictable.',
+    solution:
+      'They published a short weekly insight on LinkedIn, added a free assessment call, and followed every lead within 24h.',
+    result: 'They filled their calendar 2 months ahead and stopped chasing work.',
+    metric: '2 months booked ahead',
+    lesson: 'Consistent content plus a clear next step fills a pipeline predictably.',
+    apply:
+      'Post one genuine insight a week, offer a low-pressure discovery call, and follow up fast.',
+    tags: ['Marketing', 'Freelance', 'Acquisition'],
   },
 ];
 

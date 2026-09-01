@@ -1,10 +1,30 @@
+import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Building2, TrendingUp, Lightbulb, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Building2, TrendingUp, Lightbulb, CheckCircle2, Sparkles } from 'lucide-react';
 import { CASE_STUDIES } from '../data/content';
+import { BUSINESS_TYPES, getBusinessTypeLabel } from '../data/businessTypes';
+import { prioritizeCaseStudies } from '../lib/recommendations';
+import { useBusinessStore } from '../store/businessStore';
 import { Card, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
+import { Button } from '../components/ui/Button';
 
 export function CasesPage() {
+  const navigate = useNavigate();
+  const store = useBusinessStore();
+  const businessTypeId = store.businessType;
+  const problem = store.plan?.problem ?? '';
+
+  // Prioritize cases so the most relevant ones (by business type + problem)
+  // appear first. Optional manual filter lets the user browse by type.
+  const prioritized = useMemo(
+    () => prioritizeCaseStudies(businessTypeId, problem, CASE_STUDIES),
+    [businessTypeId, problem],
+  );
+  const [filter, setFilter] = useState<string | null>(null);
+  const studies = filter ? prioritized.filter((s) => s.businessType === filter) : prioritized;
+
   return (
     <div className="mx-auto max-w-3xl">
       <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">Case Studies</p>
@@ -12,12 +32,33 @@ export function CasesPage() {
         How others grew — and how you can too
       </h1>
       <p className="mx-auto mt-2 max-w-xl text-base text-slate-500">
-        Real small businesses, real problems, simple strategies. Each case shows the
-        challenge, the solution, the result — and how to apply the lesson to your business.
+        {businessTypeId ? (
+          <>
+            <span className="font-semibold text-slate-700">
+              {getBusinessTypeLabel(businessTypeId)}
+            </span>{' '}
+            matches are shown first. Each case shows the challenge, the strategy, the result, and
+            how to apply the lesson.
+          </>
+        ) : (
+          'Real small businesses, real problems, simple strategies. Each case shows the challenge, the solution, the result — and how to apply the lesson to your business.'
+        )}
       </p>
 
-      <div className="mt-8 grid grid-cols-1 gap-5">
-        {CASE_STUDIES.map((study, i) => (
+      {/* Filter by business type */}
+      <div className="mt-5 flex flex-wrap gap-2">
+        <FilterChip active={filter === null} onClick={() => setFilter(null)}>
+          <Sparkles className="h-3 w-3" /> Most relevant
+        </FilterChip>
+        {BUSINESS_TYPES.filter((t) => t.id !== 'other').map((t) => (
+          <FilterChip key={t.id} active={filter === t.id} onClick={() => setFilter(t.id)}>
+            {t.emoji} {t.label}
+          </FilterChip>
+        ))}
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-5">
+        {studies.map((study, i) => (
           <motion.div
             key={study.id}
             initial={{ opacity: 0, y: 12 }}
@@ -37,16 +78,13 @@ export function CasesPage() {
           <div>
             <p className="font-semibold text-slate-900">See a pattern?</p>
             <p className="mt-1 text-sm text-slate-600">
-              Every business above started with a simple problem, picked ONE strategy,
-              and took small consistent steps. You can do the same — tell GrowBro your
-              problem and you'll get a clear plan to follow.
+              Every business above started with a simple problem, picked ONE strategy, and took
+              small consistent steps. You can do the same — tell GrowBro your business type and
+              problem and you'll get a clear 30-day plan to follow.
             </p>
-            <button
-              onClick={() => (window.location.href = '/home')}
-              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:underline"
-            >
-              Tell me my problem <ArrowRight className="h-4 w-4" />
-            </button>
+            <Button variant="ghost" size="sm" className="mt-2" onClick={() => navigate('/home')}>
+              Start my growth plan <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
@@ -54,7 +92,30 @@ export function CasesPage() {
   );
 }
 
-function CaseStudyCard({ study }: { study: typeof CASE_STUDIES[0] }) {
+function FilterChip({
+  children,
+  active,
+  onClick,
+}: {
+  children: React.ReactNode;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+        active
+          ? 'bg-brand-600 text-white'
+          : 'bg-white text-slate-600 ring-1 ring-inset ring-slate-200 hover:bg-brand-50 hover:text-brand-700'
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function CaseStudyCard({ study }: { study: (typeof CASE_STUDIES)[0] }) {
   return (
     <Card hover className="flex flex-col overflow-hidden">
       <CardContent className="flex flex-1 flex-col p-5 sm:p-6">
@@ -62,6 +123,9 @@ function CaseStudyCard({ study }: { study: typeof CASE_STUDIES[0] }) {
           <Badge tone="neutral">
             <Building2 className="h-3 w-3" /> {study.industry}
           </Badge>
+          {study.businessType && (
+            <Badge tone="brand">{getBusinessTypeLabel(study.businessType)}</Badge>
+          )}
           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700">
             <TrendingUp className="h-3 w-3" />
             {study.metric}

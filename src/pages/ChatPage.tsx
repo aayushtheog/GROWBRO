@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Bot, Eraser, Sparkles, Info, ArrowRight, ListChecks } from 'lucide-react';
+import { Bot, Eraser, Sparkles, Info, ListChecks } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useBusinessStore } from '../store/businessStore';
 import { useToastStore } from '../store/toastStore';

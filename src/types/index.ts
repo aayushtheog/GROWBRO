@@ -70,12 +70,16 @@ export interface Strategy {
   nextSteps: string[]; // the step-by-step action plan
   caseStudyId?: string; // a relevant case study
   problemId?: string;
+  /** Personalized explanation of why this fits the user's business type + problem. */
+  fit?: string;
 }
 
 export interface CaseStudy {
   id: string;
   title: string;
   industry: string;
+  /** Optional business-type affinity so cases can be prioritized per user. */
+  businessType?: string;
   challenge: string; // business/problem
   solution: string; // strategy used
   result: string; // result
@@ -133,4 +137,44 @@ export interface ToastMessage {
   title: string;
   description?: string;
   type: 'success' | 'error' | 'info';
+}
+
+//
+// Business-type selection + 30-day growth roadmap
+//
+
+/** A selectable business type used to personalize recommendations. */
+export interface BusinessType {
+  id: string; // stable key, e.g. 'b2b-saas'
+  label: string; // 'B2B SaaS'
+  description: string; // one-line description
+  icon: string; // lucide icon name (resolved in components)
+  emoji: string; // friendly visual fallback
+  keywords: string[]; // used to match profile / problem text
+  /** Category affinities (0–3) that steer recommendations for this type. */
+  categoryAffinity: Record<string, number>;
+}
+
+/** One daily task in the 30-day roadmap. */
+export interface RoadmapDay {
+  day: number; // 1..30
+  phase: number; // 1..4
+  phaseName: string; // e.g. 'Week 1 · Setup & Research'
+  task: string;
+  goal: string;
+  outcome: string;
+  done: boolean;
+  doneAt?: number; // timestamp when completed
+}
+
+/** A logged set of daily growth metrics (keyed to a roadmap day). */
+export interface DailyMetricLog {
+  id: string;
+  day: number; // roadmap day (1..30)
+  dateLabel: string; // e.g. 'Day 5'
+  customers: number;
+  leads: number;
+  sales: number;
+  revenue: number;
+  conversionRate: number;
 }

@@ -35,7 +35,12 @@ export function StrategyCard({
 
       <p className="mt-2 text-sm leading-relaxed text-slate-600">{strategy.summary}</p>
 
-      {strategy.why && (
+      {strategy.fit && (
+        <p className="mt-3 rounded-xl bg-brand-50/70 px-3 py-2.5 text-sm text-slate-700">
+          <span className="font-semibold text-brand-700">Why this fits you:</span> {strategy.fit}
+        </p>
+      )}
+      {!strategy.fit && strategy.why && (
         <p className="mt-3 rounded-xl bg-brand-50/70 px-3 py-2.5 text-sm text-slate-700">
           <span className="font-semibold text-brand-700">Why it could help:</span> {strategy.why}
         </p>

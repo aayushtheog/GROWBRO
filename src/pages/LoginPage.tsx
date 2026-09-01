@@ -73,7 +73,7 @@ export function LoginPage() {
           title: mode === 'signin' ? 'Welcome back!' : 'Account created!',
           description: mode === 'signin' ? 'Loading your dashboard…' : 'Your GrowBro workspace is ready.',
         });
-        navigate('/dashboard', { replace: true });
+        navigate('/home', { replace: true });
       }
     }, 700);
   };
@@ -83,7 +83,7 @@ export function LoginPage() {
     setTimeout(() => {
       signIn(DEMO_CREDENTIALS.email, DEMO_CREDENTIALS.password);
       notify({ type: 'success', title: 'Signed in with demo account', description: 'Exploring your demo workspace.' });
-      navigate('/dashboard', { replace: true });
+      navigate('/home', { replace: true });
     }, 500);
   };
 

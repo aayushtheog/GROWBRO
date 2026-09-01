@@ -1,8 +1,8 @@
-import { Bot, User, ArrowRight, ListChecks } from 'lucide-react';
+import { Bot, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { ChatMessage, AiSolution } from '../../types';
 import { AiSolutionView } from './AiSolutionView';
-import { Button } from '../ui/Button';
+
 
 interface ChatBubbleProps {
   message: ChatMessage;
